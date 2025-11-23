@@ -14,3 +14,17 @@ npm run dev
 ## 수정.
 - Payload 내부의 *.sample.ts를 수정할 것.
 - 각 항목의 disable 여부를 통해 렌더링 여부를 결정할 수 있음.
+
+## .vscode/setting.json
+- eslint 적용이 필요한 경우, 아래와 같이 설정.
+```
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.formatOnSave": false,
+  "eslint.useFlatConfig": true
+}
+```
