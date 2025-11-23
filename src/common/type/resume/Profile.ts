@@ -2,7 +2,7 @@ import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 
 import type { Payload } from '@/common/type/Common';
 
-export interface ProfileSectionProps extends Payload {
+export interface ProfileType extends Payload {
   image: string;
   name: {
     title: string;

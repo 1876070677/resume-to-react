@@ -8,7 +8,12 @@ import Badge from '@/entities/resume/common/Badge';
 import { getFormattingExperienceTotalDuration } from '@/features/Experience';
 import { ExperienceRow } from '@/entities/resume/experience/ExperienceRow';
 
-export function ExperienceSection({ payload }: { payload: ExperienceType }) {
+interface PropsForExperience {
+  id?: string;
+  payload: ExperienceType;
+}
+
+export function ExperienceSection({ id, payload }: PropsForExperience) {
   const totalPeriod = () => {
     if (payload.disableTotalPeriod) {
       return '';
@@ -22,7 +27,7 @@ export function ExperienceSection({ payload }: { payload: ExperienceType }) {
 
   return (
     !payload.disable && (
-      <div className="mt-5">
+      <div id={id} className="mt-5">
         <EmptyRowCol>
           <Row className="pb-3">
             <Col>

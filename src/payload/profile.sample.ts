@@ -3,9 +3,9 @@ import { faFacebook, faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 
 import image from '@/assets/sample_tux.png';
-import type { ProfileSectionProps } from '@/common/type/resume/Profile';
+import type { ProfileType } from '@/common/type/resume/Profile';
 
-export const profile: ProfileSectionProps = {
+export const profile: ProfileType = {
   disable: false,
 
   // image: 'https://resume.yowu.dev/static/image/profile_2019.png',

@@ -5,11 +5,16 @@ import Col from '@/entities/resume/common/Col';
 import Row from '@/entities/resume/common/Row';
 import type { SkillType } from '@/common/type/resume/Skill';
 
-export function SkillSection({ payload }: { payload: SkillType }) {
+interface PropsForSkill {
+  id?: string;
+  payload: SkillType;
+}
+
+export function SkillSection({ id, payload }: PropsForSkill) {
   const { tooltip } = payload;
   return (
     !payload.disable && (
-      <div className="mt-[3rem]">
+      <div id={id} className="mt-[3rem]">
         <EmptyRowCol>
           <Row className="grid-cols-12 pb-3">
             <Col className="col-span-12">
@@ -21,7 +26,7 @@ export function SkillSection({ payload }: { payload: SkillType }) {
           </Row>
           {payload.skills.map((skill, index) => (
             /* eslint-disable react/no-array-index-key */
-            <SkillRow skill={skill} index={index} />
+            <SkillRow key={skill.category} skill={skill} index={index} />
           ))}
         </EmptyRowCol>
       </div>

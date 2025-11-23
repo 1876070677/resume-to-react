@@ -1,13 +1,20 @@
 import type { OpenSourceType } from '@/common/type/resume/OpenSource';
-import { CommonSection } from '@/entities/resume/common/CommnSection';
+import { CommonSection } from '@/entities/resume/common/CommonSection';
 import OpenSourceRow from '@/entities/resume/opensource/OpenSourceRow';
 
-export function OpenSourceSection({ payload }: { payload: OpenSourceType }) {
+interface PropsForOpenSource {
+  id?: string;
+  payload: OpenSourceType;
+}
+
+export function OpenSourceSection({ id, payload }: PropsForOpenSource) {
   return (
     !payload.disable && (
-      <CommonSection title="OPEN SOURCE">
-        <OpenSourceRow payload={payload} />
-      </CommonSection>
+      <div id={id}>
+        <CommonSection title="OPEN SOURCE">
+          <OpenSourceRow payload={payload} />
+        </CommonSection>
+      </div>
     )
   );
 }

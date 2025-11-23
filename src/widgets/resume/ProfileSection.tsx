@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import type { ProfileSectionProps } from '@/common/type/resume/Profile';
+import type { ProfileType } from '@/common/type/resume/Profile';
 import Contact from '@/entities/resume/profile/Contact';
 import ProfileImage from '@/entities/resume/profile/ProfileImage';
 import { EmptyRowCol } from '@/entities/resume/common/EmptyRowCol';
@@ -8,12 +8,17 @@ import Row from '@/entities/resume/common/Row';
 import Col from '@/entities/resume/common/Col';
 import Notice from '@/entities/resume/common/Notice';
 
-export function ProfileSection({ payload }: { payload: ProfileSectionProps }) {
+interface PropsForProfile {
+  id?: string;
+  payload: ProfileType;
+}
+
+export function ProfileSection({ id, payload }: PropsForProfile) {
   const { image, contacts, name, notice } = payload;
 
   return (
     !payload.disable && (
-      <div className="mt-[3rem]">
+      <div id={id} className="mt-[3rem]">
         <Row className="grid-cols-12 gap-1">
           <Col className="col-span-12 md:col-span-3 mx-auto">
             <ProfileImage src={image} />

@@ -5,7 +5,12 @@ import Row from '@/entities/resume/common/Row';
 import Col from '@/entities/resume/common/Col';
 import Badge from '@/entities/resume/common/Badge';
 
-export function IntroduceSection({ payload }: { payload: IntroduceType }) {
+interface PropsForIntroduce {
+  id?: string;
+  payload: IntroduceType;
+}
+
+export function IntroduceSection({ id, payload }: PropsForIntroduce) {
   const { contents, sign, latestUpdated } = payload;
   const now = dayjs();
   const updatedDate = dayjs(latestUpdated); 
@@ -13,7 +18,7 @@ export function IntroduceSection({ payload }: { payload: IntroduceType }) {
 
   return (
     !payload.disable && (
-      <div className="mt-[3rem]">
+      <div id={id} className="mt-[3rem]">
         <Row className="grid-cols-12 px-2">
           <Col className="col-span-12 md:col-span-3">
             <h2 className="text-blue text-left break-all whitespace-normal leading-none">INTRODUCE</h2>

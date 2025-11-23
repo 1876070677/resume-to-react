@@ -1,13 +1,20 @@
 import type { EducationType } from '@/common/type/resume/Education';
-import { CommonSection } from '@/entities/resume/common/CommnSection';
+import { CommonSection } from '@/entities/resume/common/CommonSection';
 import { EducationRow } from '@/entities/resume/education/EducationRow';
 
-export function EducationSection({ payload }: { payload: EducationType }) {
+interface PropsForEducation {
+  id?: string;
+  payload: EducationType;
+}
+
+export function EducationSection({ id, payload }: PropsForEducation) {
   return (
     !payload.disable && (
-      <CommonSection title="EDUCATION">
-        <EducationRow payload={payload} />
-      </CommonSection>
+      <div id={id}>
+        <CommonSection title="EDUCATION">
+          <EducationRow payload={payload} />
+        </CommonSection>
+      </div>
     )
   );
 }

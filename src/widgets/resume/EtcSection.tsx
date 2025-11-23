@@ -1,13 +1,20 @@
 import type { EtcType } from '@/common/type/resume/Etc';
-import { CommonSection } from '@/entities/resume/common/CommnSection';
+import { CommonSection } from '@/entities/resume/common/CommonSection';
 import { EducationRow } from '@/entities/resume/education/EducationRow';
 
-export function EtcSection({ payload }: { payload: EtcType }) {
+interface PropsForEtc {
+  id?: string;
+  payload: EtcType;
+}
+
+export function EtcSection({ id, payload }: PropsForEtc) {
   return (
     !payload.disable && (
-      <CommonSection title="ETC">
-        <EducationRow payload={payload} />
-      </CommonSection>
+      <div id={id}>
+        <CommonSection title="ETC">
+          <EducationRow payload={payload} />
+        </CommonSection>
+      </div>
     )
   );
 }

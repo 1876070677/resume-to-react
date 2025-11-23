@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import type { Description, FontWeightType } from '@/common/type/Common';
 import { HrefTargetBlank } from '@/entities/resume/common/HrefTargetBlank';
 import { cn } from '@/features/Util';
@@ -88,18 +89,16 @@ function DescriptionRecursion({ descriptions }: { descriptions: Description[] })
   return (
     <ul className="list-disc pl-[40px]" style={{ listStyleType: 'circle' }}>
       {descriptions.map((description, index) => (
-        <>
-          {/* eslint-disable react/no-array-index-key */}
-          <DescriptionRow description={description} key={index.toString()} />
+        <div key={index.toString()}>
+          <DescriptionRow description={description} />
           {description.descriptions ? (
             <DescriptionRecursion
               descriptions={description.descriptions}
-              key={index.toString()}
             />
           ) : (
             ''
           )}
-        </>
+        </div>
       ))}
     </ul>
   );
@@ -110,18 +109,16 @@ export function CommonDescription({ descriptions, option }: { descriptions: Desc
     descriptions ? (
       <ul className={cn('list-disc pl-[40px]', option?.padding ? 'pt-2' : '')}>
         {descriptions.map((description, descIndex) => (
-          <>
-            {/* eslint-disable react/no-array-index-key */}
-            <DescriptionRow description={description} key={descIndex.toString()} />
+          <div key={descIndex.toString()}>
+            <DescriptionRow description={description} />
             {description.descriptions ? (
               <DescriptionRecursion
                 descriptions={description.descriptions}
-                key={descIndex.toString()}
               />
             ) : (
               ''
             )}
-          </>
+          </div>
         ))}
       </ul>
     ) : (

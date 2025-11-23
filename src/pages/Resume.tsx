@@ -1,6 +1,4 @@
-import { useRef } from 'react';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { useRef, useState } from 'react';
 
 import profile from '@/payload/profile.sample';
 import introduce from '@/payload/introduce.sample';
@@ -26,47 +24,32 @@ import { EtcSection } from '@/widgets/resume/EtcSection';
 import { Footer } from '@/widgets/resume/Footer';
 import { PresentationSection } from '@/widgets/resume/PresentationSection';
 import { cn } from '@/features/Util';
+import { createMultiPagePDFPerSection, handleCapture } from '@/features/ConvertToPdf';
+import ResumePdf from '@/pages/ResumePdf';
+import useResumeStore from '@/zustand/ResumeStore';
 
 export function Resume() {
-  const resumeRef = useRef<HTMLDivElement>(null);
+  // state.
+  const setCapture = useResumeStore((state) => state.setCapture);
+  const clearCapture = useResumeStore((state) => state.clearCapture);
+  const [opened, setOpened] = useState(false);
 
-  const handleDownloadPdf = async () => {
-    const element = resumeRef.current;
-    if (!element) return; 
+  // ref.
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-    });
-
-    const imgData = canvas.toDataURL('image/png');
+  const handleClickConvert = async () => {
+    if (!containerRef?.current) return;
+    const { imageDataURL } = await handleCapture(containerRef.current);
     
-    // eslint-disable-next-line new-cap
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    
-    const imgWidth = canvas.width;
-    const imgHeight = canvas.height;
-
-    const ratio = imgWidth / imgHeight;
-    const finalHeight = pdfWidth / ratio;
-
-    let heightLeft = finalHeight;
-    let position = 0;
-
-    pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, finalHeight);
-    heightLeft -= pdfHeight;
-    while (heightLeft >= 0) {
-      position = heightLeft - finalHeight;
-
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, finalHeight);
-    
-      heightLeft -= pdfHeight;
+    if (imageDataURL) {
+      setCapture(imageDataURL);
+      setOpened(true);
     }
-    pdf.save('report.pdf');
+  };
+
+  const handleClickDownload = async () => {
+    if (!containerRef?.current) return;
+    await createMultiPagePDFPerSection(containerRef.current);
   };
 
   return (
@@ -74,16 +57,46 @@ export function Resume() {
       <div>
         <button
           type="button" 
-          onClick={handleDownloadPdf}
           className={cn(
             'absolute top-2 right-2 text-white bg-bluelight font-pretendard px-3 py-1 rounded-md hover:scale-110 transition-all duration-400',
             'ease-in-out',
           )}
+          onClick={() => handleClickConvert()}
         >
-          PDF 다운로드
+          PDF로 변환
         </button>
+        <button 
+          className={cn(
+            'absolute top-15 right-2 text-white bg-gray font-pretendard px-3 py-1 rounded-md hover:scale-110 transition-all duration-400',
+            'ease-in-out',
+          )}
+          type="button"
+          onClick={() => { 
+            clearCapture();
+            setOpened(false);
+          }}
+        >
+          미리보기 제거
+        </button>
+        {opened && (
+          <button 
+            className={cn(
+              'absolute top-[87px] right-2 text-white bg-greendeep font-pretendard px-3 py-1 rounded-md hover:scale-110 transition-all duration-400',
+              'ease-in-out',
+            )}
+            type="button"
+            onClick={() => { 
+              handleClickDownload();
+            }}
+          >
+            PDF 다운로드
+          </button>
+        )}
       </div>
-      <Container ref={resumeRef} className="font-pretendard font-light break-words break-keep leading-relaxed leading-18">
+      <div className={cn('absolute top-0 h-full w-[50%]', opened ? 'left-0' : 'left-[-9999px]')}>
+        <ResumePdf />
+      </div>
+      <Container ref={containerRef} className="font-pretendard font-light break-words break-keep leading-relaxed leading-18">
         <ProfileSection payload={profile} />
         <IntroduceSection payload={introduce} />
         <SkillSection payload={skill} />

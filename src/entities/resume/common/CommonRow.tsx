@@ -1,6 +1,6 @@
 import type { RowElement } from '@/common/type/Common';
 import Col from '@/entities/resume/common/Col';
-import { CommonDescription } from '@/entities/resume/common/CoomonDescription';
+import { CommonDescription } from '@/entities/resume/common/CommonDescription';
 import Row from '@/entities/resume/common/Row';
 
 export function CommonRows({ index, payload }: { payload: RowElement; index: number }) {

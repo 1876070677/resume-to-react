@@ -1,13 +1,20 @@
-import { CommonSection } from '@/entities/resume/common/CommnSection';
+import { CommonSection } from '@/entities/resume/common/CommonSection';
 import ProjectRow from '@/entities/resume/project/ProjectRow';
 import type { ProjectType } from '@/common/type/resume/Project';
 
-export function ProjcecSection({ payload }: { payload: ProjectType }) {
+interface PropsForProject {
+  id?: string;
+  payload: ProjectType;
+}
+
+export function ProjcecSection({ id, payload }: PropsForProject) {
   return (
     !payload.disable && (
-      <CommonSection title="PROJECT">
-        <ProjectRow payload={payload} />
-      </CommonSection>
+      <div id={id}>
+        <CommonSection title="PROJECT">
+          <ProjectRow payload={payload} />
+        </CommonSection>
+      </div>
     )
   );
 }

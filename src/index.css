@@ -36,4 +36,8 @@
   p {
     @apply text-left mb-3 font-light;
   }
+
+  img {
+    @apply inline-block;
+  }
 }
