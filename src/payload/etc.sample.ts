@@ -1,0 +1,23 @@
+import type { EtcType } from '@/common/type/resume/Etc';
+
+const etc: EtcType = {
+  disable: false,
+
+  list: [
+    {
+      key: 1,
+      title: 'Featured on SuperTuxKart',
+      subTitle: "Steve & Oliver Baker's",
+      startedAt: '2016-07',
+    },
+    {
+      key: 2,
+      title: "Biting Linus Torvalds' Foot",
+      subTitle: 'Australia National Zoo & Aquarium',
+      startedAt: '1993-07',
+      endedAt: '1993-08',
+    },
+  ],
+};
+
+export default etc;
